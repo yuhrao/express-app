@@ -22,12 +22,7 @@ const app = express();
 app.use(bp.urlencoded({ extended: true }));
 app.use(bp.json());
 
-app.use(
-  cors({
-    origin: "*",
-    methods: "GET,PUT,POST,DELETE",
-  })
-);
+app.use(cors());
 
 app.get("/pets", async (req, res) => {
   const result = await PetSchema.find().exec();
