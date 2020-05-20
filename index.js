@@ -2,6 +2,7 @@ const express = require("express");
 const bp = require("body-parser");
 const mongoose = require("mongoose");
 const PetSchema = require("./schemas/petSchema");
+const cors = require("cors");
 
 // Conexão com o MongoDB
 const mongoUser = "a53f0ac479";
@@ -20,6 +21,13 @@ const app = express();
 
 app.use(bp.urlencoded({ extended: true }));
 app.use(bp.json());
+
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,PUT,POST,DELETE",
+  })
+);
 
 app.get("/pets", async (req, res) => {
   const result = await PetSchema.find().exec();
