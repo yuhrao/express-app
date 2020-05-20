@@ -97,4 +97,4 @@ app.delete("/pets/:id", async ({ params }, res) => {
   }
 });
 
-app.listen(80, () => console.log("running my app"));
+app.listen(process.env.PORT || 80, () => console.log("running my app"));
