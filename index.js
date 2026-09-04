@@ -12,10 +12,7 @@ const mongoPass =
 mongoose.Promise = global.Promise;
 const mongoConnUrl = `mongodb+srv://${mongoUser}:${mongoPass}@cluster-nat-i13hp.mongodb.net/test?retryWrites=true&w=majority`;
 
-mongoose.connect(mongoConnUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoConnUrl);
 
 const app = express();
 
@@ -69,7 +66,7 @@ app.put("/pets/:id", async ({ params, body }, res) => {
 
       if (!!entity) {
         console.log(entity.toObject());
-        await entity.update({ ...body }).exec();
+        await entity.updateOne({ ...body }).exec();
         res.status(200).send();
       } else res.status(404).send();
     } else res.status(400).json({ description: "Invalid Id" });
@@ -86,7 +83,7 @@ app.delete("/pets/:id", async ({ params }, res) => {
       const result = await PetSchema.findById(petId).maxTimeMS(3000).exec();
 
       if (!!result) {
-        await result.delete();
+        await result.deleteOne();
         res.status(200).send();
       } else {
         res.status(404).send();
